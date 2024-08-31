@@ -1,0 +1,13 @@
+{
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mkhl.direnv",
+        "Shopify.ruby-extensions-pack"
+      ]
+    }
+  },
+  "image": "ghcr.io/cachix/devenv:latest",
+  "overrideCommand": false,
+  "updateContentCommand": "devenv test"
+}

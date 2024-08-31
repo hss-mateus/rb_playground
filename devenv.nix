@@ -19,4 +19,13 @@
   };
 
   enterShell = "bundle check || bundle install";
+  enterTest = "rake";
+
+  devcontainer = {
+    enable = true;
+    settings.customizations.vscode.extensions = [
+      "mkhl.direnv"
+      "Shopify.ruby-extensions-pack"
+    ];
+  };
 }
