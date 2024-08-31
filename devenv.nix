@@ -15,11 +15,11 @@
   languages.ruby = {
     enable = true;
     bundler.enable = false;
-    versionFile = ./.ruby-version;
+    package = pkgs.ruby_3_3;
   };
 
   enterShell = "bundle check || bundle install";
-  enterTest = "rake";
+  enterTest = "bundle exec rake";
 
   devcontainer = {
     enable = true;
