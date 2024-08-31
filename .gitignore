@@ -1,0 +1,11 @@
+.devenv*
+devenv.local.nix
+.direnv
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
