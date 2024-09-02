@@ -1,25 +1,31 @@
-{ pkgs, ... }:
 {
-  env.NIX_LD = "${pkgs.glibc}/lib64/ld-linux-x86-64.so.2";
+  pkgs,
+  ruby-nix,
+  bundix,
+  ...
+}:
+let
+  gemset = if builtins.pathExists ./gemset.nix then import ./gemset.nix else { };
 
-  packages = with pkgs; [
-    cmake
-    editorconfig-core-c
-    git
-    libyaml
-    openssl
-    readline
-    watchman
+  rubyNix = ruby-nix.lib pkgs {
+    inherit gemset;
+
+    ruby = pkgs.ruby_3_3;
+    name = "rb_playground";
+    gemConfig = pkgs.defaultGemConfig;
+  };
+in
+{
+  env.BUNDLE_PATH = "vendor/bundle";
+
+  packages = [
+    bundix.packages.${pkgs.stdenv.system}.default
+    rubyNix.env
+    rubyNix.ruby
+    pkgs.git
   ];
 
-  languages.ruby = {
-    enable = true;
-    bundler.enable = false;
-    package = pkgs.ruby_3_3;
-  };
-
-  enterShell = "bundle check || bundle install";
-  enterTest = "bundle exec rake";
+  enterTest = "rake";
 
   devcontainer = {
     enable = true;
