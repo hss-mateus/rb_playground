@@ -4,28 +4,25 @@
   bundix,
   ...
 }:
+with pkgs;
 let
-  gemset = if builtins.pathExists ./gemset.nix then import ./gemset.nix else { };
-
   rubyNix = ruby-nix.lib pkgs {
-    inherit gemset;
-
-    ruby = pkgs.ruby_3_3;
-    name = "rb_playground";
-    gemConfig = pkgs.defaultGemConfig;
+    gemset = ./gemset.nix;
+    ruby = ruby_3_3;
+    gemConfig = defaultGemConfig;
   };
 in
 {
-  env.BUNDLE_PATH = "vendor/bundle";
-
   packages = [
-    bundix.packages.${pkgs.stdenv.system}.default
+    bundix.packages.${system}.default
+    editorconfig-core-c
+    git
     rubyNix.env
-    rubyNix.ruby
-    pkgs.git
   ];
 
+  env.RUBY_YJIT_ENABLE = 1;
   enterTest = "rake";
+  cachix.enable = false;
 
   devcontainer = {
     enable = true;

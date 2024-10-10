@@ -4,6 +4,9 @@ inputs:
 
   ruby-nix:
     url: github:inscapist/ruby-nix
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
 
   bundix:
     url: github:inscapist/bundix/main
